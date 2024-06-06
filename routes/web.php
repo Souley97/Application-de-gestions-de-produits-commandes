@@ -17,5 +17,8 @@ Route::controller(AuthController::class)->group(function(){
     Route::get('/login','login')->name('login');
     Route::post('/login/save','loginSave')->name('login.save');
 
+    Route::delete('/logout','logout')->name('logout');
+
+
 
 });
