@@ -23,8 +23,6 @@ class AuthController extends Controller
         ]);
         
 
-
-
         $user= new User();
         $user->nom=$request->nom;
         $user->prenom=$request->prenom;
@@ -34,4 +32,21 @@ class AuthController extends Controller
         $user->save();
         return redirect()->route('login');
     
-       }}
+       }
+
+
+       public function login(){
+        return view('authentifications.login');
+       }
+    
+       public function loginSave(Request $request){
+        $creditials=[
+            'email'=>$request->email,
+            'password' => $request->password,
+        ];
+        if(Auth::attempt($creditials)){
+            return redirect ('/')->with('success','connexion avec succes');
+        }
+     return back()->with('error','vérifier votre mail ou mot de passe');
+       }
+    }

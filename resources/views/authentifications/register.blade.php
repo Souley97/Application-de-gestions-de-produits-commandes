@@ -30,7 +30,7 @@
             <a href="#" class="text-white text-xl font-bold">MonSite</a>
             <div>
                 <a href="{{ route('register') }}" class="text-gray-300 hover:text-white mx-2">Inscription</a>
-                <a href="{{ route('register') }}" class="text-gray-300 hover:text-white mx-2">Connexion</a>
+                <a href="{{ route('login') }}" class="text-gray-300 hover:text-white mx-2">Connexion</a>
             </div>
         </div>
     </nav>
