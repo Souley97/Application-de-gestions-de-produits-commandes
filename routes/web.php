@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\ProduitController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +19,15 @@ Route::controller(AuthController::class)->group(function(){
 
     Route::delete('/logout','logout')->name('logout');
 
+
+
+});
+
+
+Route::controller(ProduitController::class)->group(function(){
+
+    Route::get('/', 'index')->name('produit.index');
+    
 
 
 });
