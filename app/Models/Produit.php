@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+
 
 
 class Produit extends Model
@@ -12,7 +14,6 @@ class Produit extends Model
     protected $fillable = [
         'reference',
         'designation',
-        'type',
         'prix_unitaire',
         'image',
         'etat',
@@ -30,14 +31,11 @@ class Produit extends Model
      {
         return $this->belongsTo(User::class);
     }
-
-
-    protected static function boot()
+    public function commandes()
     {
-        parent::boot();
-
-        static::creating(function ($produit) {
-            $produit->reference = 'ref-' . str::random(8);
-        });
+        return $this->belongsToMany(Commande::class);
     }
+
+
+    
 }

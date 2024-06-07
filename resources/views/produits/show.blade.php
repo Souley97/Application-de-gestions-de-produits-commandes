@@ -79,7 +79,8 @@
                 @endif
             </div>
             <div class="bg-gray-100 px-6 py-4 flex justify-between">
-              
+                <a href="{{ route('produits.commandes.create', $produit->id) }}" class="btn btn-primary">Passer une commande</a>
+
             </div>
         </div>
     </div>

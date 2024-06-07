@@ -79,13 +79,7 @@
                 <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="form-group">
-                <label for="type" class="block text-gray-700 font-medium">Type</label>
-                <input type="text" name="type" id="type" class="form-control w-full p-2 border border-gray-300 rounded mt-1 @error('type') border-red-500 @enderror" value="{{ old('type') }}">
-                @error('type')
-                <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
-                @enderror
-            </div>
+            
             <div class="form-group">
                 <label for="prix_unitaire" class="block text-gray-700 font-medium">Prix unitaire</label>
                 <input type="number" step="0.01" name="prix_unitaire" id="prix_unitaire" class="form-control w-full p-2 border border-gray-300 rounded mt-1 @error('prix_unitaire') border-red-500 @enderror" value="{{ old('prix_unitaire') }}">

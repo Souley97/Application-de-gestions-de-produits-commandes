@@ -25,7 +25,6 @@ class ProduitController extends Controller
     {
         $request->validate([
             'designation' => 'required|string|max:55|min:4',
-            'type' => 'nullable|string|max:55|min:4',
             'prix_unitaire' => 'required|numeric|min:3',
             'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'etat' => 'required|in:disponible,en_rupture,en_stock',
@@ -53,6 +52,9 @@ class ProduitController extends Controller
         $data = $request->all();
         $data['image'] = $image;
         $data['user_id'] = $admin;
+        $data['reference'] = 'ref-' . uniqid();
+
+
 
         Produit::create($data);
 

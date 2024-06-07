@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\ProduitController;
 
 Route::get('/', function () {
@@ -37,3 +38,14 @@ Route::controller(ProduitController::class)->group(function(){
 
 
 });
+
+
+Route::controller(CommandeController::class)->group(function(){
+
+    Route::get('/produits/{produit}/commandes/create', 'createCommande')->name('produits.commandes.create');
+
+    Route::post('produits/{produit}/commandes','storeCommande')->name('produits.commandes.store');
+
+});
+
+// Route pour afficher le formulaire de commande
