@@ -100,7 +100,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
                             <span class="text-blue-800 text-sm font-medium px-2.5 py-0.5 rounded">
                                 <i class="fa-solid fa-border-top-left"></i> {{ $produit->etat }}
                             </span>
-                            <a href="{{ url('produits/show/' . $produit->id) }}"
+                            <a href="{{ url('produit/detail/' . $produit->id) }}"
                                 class="text-blue-500 hover:text-blue-700 font-medium">
                                 Voir détail <i class="bi bi-arrow-right"></i>
                             </a>

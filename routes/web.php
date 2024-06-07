@@ -31,6 +31,9 @@ Route::controller(ProduitController::class)->group(function(){
     Route::get('/produit/create', 'create')->name('produits.create');
     Route::post('/produit/save', 'store')->name('produits.store');
 
+    Route::get('/produit/detail/{id}', 'show')->name('produits.show');
+
+
 
 
 });

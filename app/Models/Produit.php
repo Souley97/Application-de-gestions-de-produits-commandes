@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 
 class Produit extends Model
@@ -22,11 +21,13 @@ class Produit extends Model
     ];
 
 
-    public function categorie(){
+    public function categorie()
+    {
         return $this->belongsTo(Categorie::class);
     }
     
-    public function admin() {
+    public function user()
+     {
         return $this->belongsTo(User::class);
     }
 

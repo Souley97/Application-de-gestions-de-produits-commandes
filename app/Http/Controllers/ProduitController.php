@@ -58,6 +58,13 @@ class ProduitController extends Controller
 
         return redirect()->route('produit.index')->with('success', 'Produit ajouté avec succès');
     }
+
+    public function show($id)
+    {
+
+        $produit = Produit::findOrFail($id);
+        return view('produits.show', compact('produit'));
+    }
 }
 
 
