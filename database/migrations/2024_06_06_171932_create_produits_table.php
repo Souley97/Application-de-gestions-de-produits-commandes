@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('reference')->unique();
             $table->string('designation');
-            $table->string('type');
             $table->decimal('prix_unitaire', 8, 2);
             $table->string('image')->nullable();
             $table->enum('etat', ['disponible', 'en_rupture', 'en_stock']);
