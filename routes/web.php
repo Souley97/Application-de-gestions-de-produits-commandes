@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommandeController;
@@ -48,4 +49,6 @@ Route::controller(CommandeController::class)->group(function(){
 
 });
 
-// Route pour afficher le formulaire de commande
+Route::controller(AdminController::class)->prefix('admin') ->group(function(){
+    Route::get('dashboard', 'index')->name('dashboard.admin');
+});
