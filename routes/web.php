@@ -27,7 +27,10 @@ Route::controller(AuthController::class)->group(function(){
 Route::controller(ProduitController::class)->group(function(){
 
     Route::get('/', 'index')->name('produit.index');
-    
+
+    Route::get('/produit/create', 'create')->name('produits.create');
+    Route::post('/produit/save', 'store')->name('produits.store');
+
 
 
 });

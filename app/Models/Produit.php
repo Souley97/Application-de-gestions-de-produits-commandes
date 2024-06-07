@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+
 
 class Produit extends Model
 {
@@ -34,7 +36,7 @@ class Produit extends Model
         parent::boot();
 
         static::creating(function ($produit) {
-            $produit->reference = 'ref-' . Str::random(8);
+            $produit->reference = 'ref-' . str::random(8);
         });
     }
 }
