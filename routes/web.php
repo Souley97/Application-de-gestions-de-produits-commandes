@@ -41,12 +41,20 @@ Route::controller(CommandeController::class)->group(function () {
     Route::post('produits/{produit}/commandes', 'storeCommande')->name('produits.commandes.store');
 });
 
+
+// Admin routes
 Route::controller(AdminController::class)->prefix('admin')->middleware('auth')->group(function () {
+
     Route::get('dashboard', 'index')->name('dashboard.admin');
 
     // Route pour valider une commande
-    Route::post('/admin/commandes/{commande}/valider', 'validerCommande')->name('admin.commandes.valider');
+    Route::post('/commandes/{commande}/valider', 'validerCommande')->name('admin.commandes.valider');
 
     // Route pour annuler une commande
-    Route::post('/admin/commandes/{commande}/annuler', 'annulerCommande')->name('admin.commandes.annuler');
+    Route::post('/commandes/{commande}/annuler', 'annulerCommande')->name('admin.commandes.annuler');
+
+    // Route pour voir liste clients a commande
+    Route::get('/clients', 'listeClients')->name('admin.clients');
+    Route::get('/clients/{client}/commandes', 'commandesClient')->name('admin.clients.commandes');
+       
 });

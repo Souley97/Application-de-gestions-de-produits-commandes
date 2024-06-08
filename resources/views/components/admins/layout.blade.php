@@ -38,21 +38,21 @@
             <div class="p-6">
             </div>
             <nav class="mt-20">
-                <a href="#" class="flex items-center p-4 text-gray-700 hover:bg-gray-200 hover:scale-105 transition-all rounded">
+                <a href="{{route('dashboard.admin')}}" class="flex items-center p-4 text-gray-700 hover:bg-gray-200 hover:scale-105 transition-all rounded">
                     <span class="material-icons-sharp">dashboard</span>
-                    <span class="ml-4">Dashboard</span>
+                    <span class="ml-4  text-green-700 font-bold">Dashboard</span>
                 </a>
                 <a href="#" class="flex items-center p-4 text-gray-700 hover:bg-gray-200 hover:scale-105 transition-all rounded">
                     <span class="material-icons-sharp">shopping_cart</span>
-                    <span class="ml-4">Commandes</span>
+                    <span class="ml-4  text-green-700 font-bold">Commandes</span>
                 </a>
                 <a href="#" class="flex items-center p-4 text-gray-700 hover:bg-gray-200 hover:scale-105 transition-all rounded">
                     <span class="material-icons-sharp">pending</span>
-                    <span class="ml-4">Commandes en cours</span>
+                    <span class="ml-4  text-green-700 font-bold">Commandes en cours</span>
                 </a>
-                <a href="#" class="flex items-center p-4 text-gray-700 hover:bg-gray-200 hover:scale-105 transition-all rounded">
-                    <span class="material-icons-sharp">group</span>
-                    <span class="ml-4">Liste des clients</span>
+                <a href="{{route('admin.clients')}}" class="flex items-center p-4 text-gray-700 hover:bg-gray-200 hover:scale-105 transition-all rounded">
+                    <span class="material-icons-sharp ">group</span>
+                    <span class="ml-4 text-green-700 font-bold">Liste des clients</span>
                 </a>
                 <form action="{{ route('logout') }}" method="post" class="mt-6 bottom-14 absolute">
                     @csrf
