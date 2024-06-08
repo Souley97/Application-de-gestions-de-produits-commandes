@@ -11,22 +11,19 @@ Route::get('/', function () {
 });
 
 
-Route::controller(AuthController::class)->group(function(){
+Route::controller(AuthController::class)->group(function () {
 
-    Route::get('/register','register')->name('register');
-    Route::post('/register/save','registerSave')->name('register.save');
+    Route::get('/register', 'register')->name('register');
+    Route::post('/register/save', 'registerSave')->name('register.save');
 
-    Route::get('/login','login')->name('login');
-    Route::post('/login/save','loginSave')->name('login.save');
+    Route::get('/login', 'login')->name('login');
+    Route::post('/login/save', 'loginSave')->name('login.save');
 
-    Route::delete('/logout','logout')->name('logout');
-
-
-
+    Route::delete('/logout', 'logout')->name('logout');
 });
 
 
-Route::controller(ProduitController::class)->group(function(){
+Route::controller(ProduitController::class)->group(function () {
 
     Route::get('/', 'index')->name('produit.index');
 
@@ -34,21 +31,22 @@ Route::controller(ProduitController::class)->group(function(){
     Route::post('/produit/save', 'store')->name('produits.store');
 
     Route::get('/produit/detail/{id}', 'show')->name('produits.show');
-
-
-
-
 });
 
 
-Route::controller(CommandeController::class)->group(function(){
+Route::controller(CommandeController::class)->group(function () {
 
     Route::get('/produits/{produit}/commandes/create', 'createCommande')->name('produits.commandes.create');
 
-    Route::post('produits/{produit}/commandes','storeCommande')->name('produits.commandes.store');
-
+    Route::post('produits/{produit}/commandes', 'storeCommande')->name('produits.commandes.store');
 });
 
-Route::controller(AdminController::class)->prefix('admin') ->group(function(){
+Route::controller(AdminController::class)->prefix('admin')->middleware('auth')->group(function () {
     Route::get('dashboard', 'index')->name('dashboard.admin');
+
+    // Route pour valider une commande
+    Route::post('/admin/commandes/{commande}/valider', 'validerCommande')->name('admin.commandes.valider');
+
+    // Route pour annuler une commande
+    Route::post('/admin/commandes/{commande}/annuler', 'annulerCommande')->name('admin.commandes.annuler');
 });
