@@ -61,7 +61,7 @@
    
 
     <div class="container mx-auto">
-        <h2 class="text-3xl font-bold mb-6">Détails du produit</h2>
+        <h2 class="text-3xl font-bold mt-5 mb-6">Détails du produit</h2>
         <div class="max-w-lg mx-auto bg-white shadow-md rounded-lg overflow-hidden">
             <div class="p-6">
                 <h3 class="text-2xl font-semibold mb-2">{{ $produit->designation }}</h3>
