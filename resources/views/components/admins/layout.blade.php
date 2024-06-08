@@ -46,7 +46,7 @@
                     <span class="material-icons-sharp">shopping_cart</span>
                     <span class="ml-4  text-green-700 font-bold">Commandes</span>
                 </a>
-                <a href="#" class="flex items-center p-4 text-gray-700 hover:bg-gray-200 hover:scale-105 transition-all rounded">
+                <a href="{{route('admin.commandes.encours')}}" class="flex items-center p-4 text-gray-700 hover:bg-gray-200 hover:scale-105 transition-all rounded">
                     <span class="material-icons-sharp">pending</span>
                     <span class="ml-4  text-green-700 font-bold">Commandes en cours</span>
                 </a>

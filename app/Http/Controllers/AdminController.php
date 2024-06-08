@@ -45,4 +45,15 @@ class AdminController extends Controller {
     
 
 }
+  // Méthode pour afficher les commandes en cours
+  public function commandesEnCours()
+  {
+      // Récupérer toutes les commandes en cours
+      $commandesEnCours = Commande::where('etat_commande', 'encours')->with('client', 'produits')->get();
+
+      // Retourner la vue avec les commandes en cours
+      return view('admin.commandes_encours', compact('commandesEnCours'));
+  }
+
+  
 }
