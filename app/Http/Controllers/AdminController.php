@@ -55,5 +55,19 @@ class AdminController extends Controller {
       return view('admin.commandes_encours', compact('commandesEnCours'));
   }
 
+
+//    // Méthode pour afficher les commandes validee
+public function commandesValidees()
+{
+    $commandesValidees = Commande::where('etat_commande', 'valide')->with('client', 'produits')->paginate(8);
+    return view('admin.commandes', ['commandes' => $commandesValidees, 'title' => 'Commandes Validées']);
+}
+
+//    // Méthode pour afficher les commandes annules
+public function commandesAnnulees()
+{
+    $commandesAnnulees = Commande::where('etat_commande', 'annule')->with('client', 'produits')->paginate(8);
+    return view('admin.commandes', ['commandes' => $commandesAnnulees, 'title' => 'Commandes Annulées']);
+}
   
 }

@@ -55,9 +55,17 @@ Route::controller(AdminController::class)->prefix('admin')->middleware('auth')->
 
     // Route pour voir liste clients a commande
     Route::get('/clients', 'listeClients')->name('admin.clients');
-    Route::get('/clients/{client}/commandes', 'commandesClient')->name('admin.clients.commandes');
-// Route pour voir liste des commandes en cours
-    Route::get('/admin/commandes/en-cours', 'commandesEnCours')->name('admin.commandes.encours');
 
-       
+    //  Route pour Voir liste commandes a un client
+    Route::get('/clients/{client}/commandes', 'commandesClient')->name('admin.clients.commandes');
+
+    // Route pour voir liste des commandes en cours
+    Route::get('/commandes/en-cours', 'commandesEnCours')->name('admin.commandes.encours');
+
+
+    //  Route pour voir liste des commandes validees
+    Route::get('/commandes/validees', 'commandesValidees')->name('admin.commandes.validees');
+
+     //  Route pour voir liste des commandes validees
+    Route::get('/commandes/annulees', 'commandesAnnulees')->name('admin.commandes.annulees');
 });
