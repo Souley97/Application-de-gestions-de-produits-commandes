@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PanierController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommandeController;
@@ -37,8 +38,12 @@ Route::controller(ProduitController::class)->group(function () {
 Route::controller(CommandeController::class)->group(function () {
 
     Route::get('/produits/{produit}/commandes/create', 'createCommande')->name('produits.commandes.create');
+    Route::get('/produits/commandes/create', 'create')->name('commande.create');
 
     Route::post('produits/{produit}/commandes', 'storeCommande')->name('produits.commandes.store');
+    Route::post('/panier/ajouter/{produitId}', 'ajouterAuPanier')->name('panier.ajouter');
+
+
 });
 
 
