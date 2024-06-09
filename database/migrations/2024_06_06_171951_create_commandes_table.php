@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('etat_commande', ['valide', 'annule', 'encours']);
 
             $table->unsignedBigInteger('client_id');
-            $table->foreign('client_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('client_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();
         });
