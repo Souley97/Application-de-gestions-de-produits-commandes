@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-white-100">
 
     <!-- Navbar -->
     <nav class="bg-white shadow-md fixed w-full top-0 z-10">

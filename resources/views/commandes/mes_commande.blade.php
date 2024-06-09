@@ -26,8 +26,7 @@
                                <tr class="hover:bg-gray-100 transition-colors duration-200">
                                    <td class="border-t px-4 py-2">{{ $commande->reference }}</td>
                                    <td class="border-t px-4 py-2">
-                                       {{ number_format($commande->montant_total, 0, ',', '') }}
-                                       XOF</td>
+                                       {{$commande->montant_total}}
                                    <td class="border-t px-4 py-2">{{ ucfirst($commande->etat_commande) }}</td>
                                    <td class="border-t px-4 py-2">
                                        <ul>
@@ -39,14 +38,33 @@
                                    <td class="border-t px-4 py-2">{{ $commande->created_at->format('H:i - d/m/Y') }}</td>
 
 
-                                   <td class="border-t text-center px-4 py-2">
-
-                                       <span
-                                           class="px-2 py-1 font-bold rounded bg-{{ $commande->etat_commande == 'valide' ? 'green-100 text-green-700' : ('encours' ? 'red-100 text-red-700' : 'red-100 text-blue-700') }}">
-                                           {{ ucfirst($commande->etat_commande) }}
-                                       </span>
-                                   </td>
-                               </tr>
+                                  <td class="border-t text-center px-4 py-2">
+                                    @if ($commande->etat_commande == 'aupanier')
+                                        <form action="{{ route('client.commandes.confirmer', $commande) }}" method="POST"
+                                            style="display:inline;"
+                                            onsubmit="return confirm('Voulez-vous vraiment valider cette commande ?')">
+                                            @csrf
+                                            <button type="submit"
+                                                class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-300">
+                                                <i class="fas fa-check"></i> Confirmer
+                                            </button>
+                                        </form>
+                                        {{-- <form action="{{ route('admin.commandes.annuler', $commande) }}" method="POST"
+                                            style="display:inline;"
+                                            onsubmit="return confirm('Voulez-vous vraiment annuler cette commande ?')">
+                                            @csrf
+                                            <button type="submit"
+                                                class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300">
+                                                <i class="fas fa-times"></i> Annuler
+                                            </button>
+                                        </form> --}}
+                                    @else
+                                        <span
+                                            class="px-2 py-1 font-bold rounded bg-{{ $commande->etat_commande == 'valide' ? 'green-100 text-green-700' : 'red-100 text-red-700' }}">
+                                            {{ ucfirst($commande->etat_commande) }}
+                                        </span>
+                                    @endif
+                                </td>
                            @endforeach
                        </tbody>
                        <tfoot>

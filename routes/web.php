@@ -44,6 +44,7 @@ Route::controller(CommandeController::class)->group(function () {
     Route::post('/panier/ajouter/{produitId}', 'ajouterAuPanier')->name('panier.ajouter');
 
 
+    Route::post('/commandes/{commande}/confirmer', 'confirmerCommande')->name('client.commandes.confirmer');
 
     Route::get('/mes-commandes', 'mesCommandes')->name('commandes.mes');
 

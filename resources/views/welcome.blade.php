@@ -3,20 +3,22 @@
 
 
         <section class="container mx-auto py-12">
-            <h2 class="text-3xl font-bold text-center mb-16 text-gray-800">Nos Derniers Produits</h2>
+            <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">Nos Derniers Produits</h2>
             <button 
             class="  text-blue-500 px-4 py-2 my-8  rounded hover:text-white hover:bg-blue-700"> <a href="{{ route('produits.create') }} ">Ajouter </a></button>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
                 @foreach ($produits as $produit)
-                <div class="product-card bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="product-card bg-white shadow-lg  border rounded-lg ">
                     @if($produit->image)
-                    <img src="{{ asset('storage/produit/'.$produit->image) }}" alt="Image du produit" class="w-full h-48 object-cover">
-                    @else
-                    <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                    <a href="{{ asset('storage/produit/'.$produit->image) }}">
+                    <img src="{{ asset('storage/produit/'.$produit->image) }}" alt="Image du produit" class="w-full p-0   bg-no-repeat cover bg-cover object-cover">
+                  
+                  </a>  @else
+                    <div class="w-full h-48 bg-gray-200 flex ">
                         <span class="text-gray-500">Pas d'image</span>
                     </div>
                     @endif
-                    <div class="p-6">
+                    <div class="p-2">
                         <h3 class="text-lg font-medium text-gray-900">{{ $produit->designation }}</h3>
                         <div class="flex items-center justify-between my-4">
                             <span class="bg-purple-100 text-purple-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">

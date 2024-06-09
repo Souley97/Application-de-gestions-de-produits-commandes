@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->string('reference');
             $table->decimal('montant_total', 8, 2);
-            $table->enum('etat_commande', ['valide', 'annule', 'encours']);
+            $table->enum('etat_commande', ['aupanier','valide', 'annule', 'encours']);
 
             $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')->references('id')->on('users')->onDelete('cascade');
@@ -31,7 +31,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('commandes');
-        $table->dropForeign('produits_client_id_foreign');
+        $table->dropForeign('commandes_client_id_foreign');
         $table->dropColumn('client_id');
     }
 };
