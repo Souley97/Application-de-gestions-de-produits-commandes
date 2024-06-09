@@ -5,6 +5,7 @@ use App\Http\Controllers\PanierController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ProduitController;
 
 Route::get('/', function () {
@@ -99,4 +100,19 @@ Route::controller(AdminController::class)->prefix('admin')->middleware('auth')->
 
 
   
+});
+
+Route::controller(CategorieController::class)->prefix('admin')->group(function (){
+    Route::get('categories', 'index')->name('admin.categories');
+
+    Route::post('categories/store', 'store')->name('categories.store');
+
+    
+    Route::delete('categories{categorie}', 'destroy')->name('categories.destroy');
+
+    Route::get('categories/{id}/edit',  'edit')->name('categories.edit');
+    Route::put('categories/{categorie}', 'update')->name('categories.update');
+
+
+
 });
