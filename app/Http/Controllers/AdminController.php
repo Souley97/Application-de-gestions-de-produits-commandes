@@ -32,7 +32,8 @@ class AdminController extends Controller {
     }
 
     public function listeClients() {
-        $clients = User::all()->where( 'role', 'client' );
+        $clients = User::all();
+        // $clients = User::all()->where( 'role', 'client' );
         return view( 'admin.clients', compact( 'clients' ) );
         
 

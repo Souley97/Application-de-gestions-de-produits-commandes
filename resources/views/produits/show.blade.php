@@ -1,92 +1,68 @@
-<!DOCTYPE html>
-<html lang="fr">
+<x-client>
+    <div class="sidebar bg-white shadow-lg  py-13  w-full   transition-all duration-300">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ma Boutique</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        .product-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-
-        .carousel-item {
-            background-size: cover;
-            background-position: center;
-            transition: opacity 1s ease-in-out;
-        }
-
-        .carousel-item.hidden {
-            opacity: 0;
-        }
-
-        .carousel-item.active {
-            opacity: 1;
-        }
-    </style>
-</head>
-
-<body class="bg-slate-400">
-
-    <header class="bg-white w-full border-x-2 shadow-2xl pb-16">
-        <div class="w-full mx-auto bg-white shadow-lg border-x-2 h-20 fixed z-50 flex justify-between px-36 items-center">
-            <a href="#" class="text-3xl font-bold text-gray-800">Gestion commande</a>
-            <nav>
-                <ul class="flex space-x-4">
-                    @auth
-                    <li>
-                        <a href="#" class="text-blue-500 hover:text-white px-4 py-2 rounded hover:bg-blue-700">Categories</a>
-                        <a href="#" class="text-blue-500 hover:text-white px-4 py-2 rounded hover:bg-blue-700">Produit</a>
-                    </li>
-                    <li>
-                        <form action="{{ route('logout') }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger text-red-600 px-4 py-2 rounded hover:text-white hover:bg-red-700" type="submit">Déconnexion</button>
-                        </form>
-                    </li>
-                    @endauth
-                </ul>
-            </nav>
-        </div>
-    </header>
-   
-
-    <div class="container mx-auto">
-        <h2 class="text-3xl font-bold mt-5 mb-6">Détails du produit</h2>
-        <div class="max-w-lg mx-auto bg-white shadow-md rounded-lg overflow-hidden">
-            <div class="p-6">
-                <h3 class="text-2xl font-semibold mb-2">{{ $produit->designation }}</h3>
-                <p class="text-gray-700"><strong>Référence:</strong> {{ $produit->reference }}</p>
-                <p class="text-gray-700"><strong>Type:</strong> {{ $produit->type }}</p>
-                <p class="text-gray-700"><strong>Prix unitaire:</strong> {{ $produit->prix_unitaire }} €</p>
-                <p class="text-gray-700"><strong>État:</strong> {{ ucfirst($produit->etat) }}</p>
-                <p class="text-gray-700"><strong>Catégorie:</strong> {{ $produit->categorie->libelle }}</p>
-                <p class="text-gray-700"><strong>Administrateur:</strong> {{ $produit->user->prenom }} {{ $produit->user->nom }}</p>
-                @if($produit->image)
-                <div class="mt-4">
-                    <strong>Image:</strong>
-                    <img src="{{ asset('storage/produit/'.$produit->image) }}" alt="Image du produit" class="w-full h-48 object-cover">
+        <div class="container mx-auto py-2 mt-24">
+            <h2 class="text-3xl font-bold mt-10 mb-6 text-center">Détails du produit</h2>
+            <div class="max-w-5xl mx-auto py-11 mt-20 flex flex-wrap justify-center items-start">
+                <div class="w-full md:w-1/2 px-4">
+                    @if ($produit->image)
+                        <div class="mt-4">
+                            <img src="{{ asset('storage/produit/' . $produit->image) }}" alt="Image du produit"
+                                class="w-full h-auto object-cover rounded-lg">
+                        </div>
+                    @endif
                 </div>
-                @endif
-            </div>
-            <div class="bg-gray-100 px-6 py-4 flex justify-between">
-                <a href="{{ route('produits.commandes.create', $produit->id) }}" class="btn btn-primary">Passer une commande</a>
+                <div class="w-full md:w-1/2 px-4">
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden p-6">
+                        <h3 class="text-2xl font-semibold mb-2">{{ $produit->designation }}</h3>
+                        <p class="text-gray-700"><strong>Référence:</strong> {{ $produit->reference }}</p>
+                        <p class="text-gray-700"><strong>Type:</strong> {{ $produit->type }}</p>
+                        <p class="text-gray-700"><strong>Prix unitaire:</strong> {{ $produit->prix_unitaire }} Xof</p>
+                        <p class="text-gray-700"><strong>État:</strong> {{ ucfirst($produit->etat) }}</p>
+                        <p class="text-gray-700"><strong>Catégorie:</strong> {{ $produit->categorie->libelle }}</p>
 
+                        @if (auth()->user())
+                            <form action="{{ route('panier.ajouter', $produit->id) }}" method="POST" class="mt-4">
+                                @csrf
+                                <button type="submit"
+                                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded">
+                                    Ajouter au panier
+                                </button>
+                            </form>
+                        @else
+                            <a href="{{ route('produits.commandes.create', $produit->id) }}"
+                                class="   bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Passer
+                                une commande</a>
+                        @endif
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    <div class="sidebar bg-white shadow-lg h-screen w-full   transition-all duration-300">
+
+        <div class="mt-24 py-11">
+            <h2 class="text-3xl font-bold mb-6 text-center">Autres produits</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @foreach ($autresProduits as $autreProduit)
+                    <div class="max-w-sm mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+                        @if ($autreProduit->image)
+                            <img src="{{ asset('storage/produit/' . $autreProduit->image) }}" alt="Image du produit"
+                                class="w-full h-48 object-cover rounded-t-lg">
+                        @endif
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">{{ $autreProduit->designation }}</h3>
+                            <p class="text-gray-700"><strong>Référence:</strong> {{ $autreProduit->reference }}</p>
+                            <p class="text-gray-700"><strong>Prix unitaire:</strong> {{ $autreProduit->prix_unitaire }}
+                                Xof</p>
+                            <a href="{{ url('produit/detail/' . $autreProduit->id) }}"
+                                class="block text-center bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4">Voir
+                                détails</a>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
-    
-
-    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js"></script>
-
-</body>
-</html>
+</x-client>

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreign('categorie_id')->references('id')->on('categories')->onDelete('cascade');
 
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -37,7 +37,7 @@ return new class extends Migration
         $table->dropForeign('produits_categorie_id_foreign');
         $table->dropColumn('categorie_id');
 
-        $table->dropForeign('produits_utilisateur_id_foreign');
-        $table->dropColumn('utilisateur_id');
+        $table->dropForeign('produits_user_id_foreign');
+        $table->dropColumn('user_id');
     }
 };

@@ -9,47 +9,87 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Stmt\Return_;
 use Psy\Readline\Userland;
+use Illuminate\Support\Facades\Hash;
 
-class CommandeController extends Controller
-{
-    public function createCommande(Produit $produit)
-    {
-        return view('commandes.create', compact('produit'));
+class CommandeController extends Controller {
+    public function createCommande( Produit $produit ) {
+        return view( 'commandes.create', compact( 'produit' ) );
     }
 
+    public function create() {
 
-    public function storeCommande(Request $request, Produit $produit)
-    {
-        $request->validate([
-            'nom' => 'required|string|max:55|min:4',
-            'prenom' => 'required|string|max:55|min:2',
-            'email' => 'required|email|max:255',
-            // Autres validations pour les informations de la commande
-        ]);
+        $produits = Produit::all();
+        // Récupérer tous les produits depuis le modèle Produit
+        return view( 'commandes.create', compact( 'produits' ) );
+    }
 
-         // Création ou récupération du client en fonction de l'email
-    $client = User::firstOrCreate(
-        ['email' => $request->email], // Recherche par email
-        [   // Données à insérer si le client n'existe pas
-            'nom' => $request->nom,
-            'prenom' => $request->prenom,
-            'role' => 'client',
-            'password' => null
-        ]
-    );
+    public function ajouterAuPanier( Request $request, $produitId ) {
+        $produit = Produit::findOrFail( $produitId );
+        $user = auth()->user();
 
+        // Si l'utilisateur est authentifié
+             if ($user) {
+                 // Récupérer ou créer la commande en cours de l'utilisateur
+        $commande = $user->commandes()->updateOrCreate(
+            [ 'etat_commande' => 'encours' ],
+            [ 'reference' => 'cmd-' . uniqid() ,
+            'montant_total' => $produit->prix_unitaire // Fournir une valeur pour montant_total
 
-        $commande = Commande::create([
+            ]
+
+        );
+
+        // Mettre à jour le montant total de la commande
+        $commande->update( [ 'montant_total' => $commande->montant_total + $produit->prix_unitaire ] );
+
+        // Ajouter le produit à la commande
+        $commande->produits()->attach( $produit->id );
+
+        return redirect()->route( 'commandes.mes' )->with( 'success', 'Produit ajouté à la commande avec succès.' );
+    } else {
+        // Valider les entrées de l'utilisateur
+                 $request->validate([
+                     'nom' => 'required|string|max:55|min:4',
+                     'prenom' => 'required|string|max:55|min:2',
+                     'email' => 'required|email|max:255',
+                 ]);
+         
+                 // Créer un nouvel utilisateur ou récupérer s'il existe déjà
+        $nouvelUtilisateur = User::firstOrCreate(
+            [ 'email' => $request->email ],
+            [
+                'nom' => $request->nom,
+                'prenom' => $request->prenom,
+                'role' => 'client',
+                'password' => Hash::make( 'passer' ),
+            ]
+        );
+
+        // Créer une commande pour le nouvel utilisateur
+        $commande = Commande::create( [
             'reference' => 'cmd-' . uniqid(),
             'montant_total' => $produit->prix_unitaire,
             'etat_commande' => 'encours',
-            'client_id' => $client->id // L'ID de la client saie 
-        ]);
-    // Attache le produit à la commande en ajoutant une entrée dans la table pivot (commande_produit).
-        $commande->produits()->attach($produit->id);
-        return dd($commande);
+            'client_id' => $nouvelUtilisateur->id,
+        ] );
 
-        // Autres actions à effectuer après la création de la commande (par exemple, redirection vers une page de confirmation)
+        // Ajouter le produit à la commande
+        $commande->produits()->attach( $produit->id );
+
+        // Connecter automatiquement l'utilisateur
+                 Auth::login($nouvelUtilisateur);
+         
+                 return redirect()->route('commandes.mes')->with('success', 'Produit ajouté à la commande avec succès.');
+             }
+         }
+
+
+         public function mesCommandes()
+{
+    $user = auth()->user();
+    $commandes = $user->commandes()->orderBy('created_at', 'desc')->paginate(10); // Paginer les commandes
+
+    return view('commandes.mes_commande', compact('commandes' ) );
     }
 
 }
