@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller {
     public function index() {
-        $commandes = Commande::with( 'client', 'produitCommandes.produit' )->get();
+        $commandes = Commande::with( 'client', 'commandeProduit.produit' )->get();
         return view( 'admin.index', compact( 'commandes' ) );
 
     }

@@ -27,9 +27,9 @@ class Commande extends Model
         return $this->belongsTo(User::class, 'client_id');
     }
 
-    public function produitCommandes()
+    public function commandeProduit()
     {
-        return $this->hasMany(ProduitCommande::class);
+        return $this->hasMany(CommandeProduit::class);
     }
 }
 
