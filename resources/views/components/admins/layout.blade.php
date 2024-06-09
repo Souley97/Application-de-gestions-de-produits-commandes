@@ -70,7 +70,14 @@
                     class="flex items-center p-4 text-gray-700 hover:bg-green-200 hover:scale-105 transition-all rounded @if (request()->routeIs('admin.clients' , 'admin.clients.commandes')) active @endif">
                     <span class="material-icons-sharp ">group</span>
                     <span class="ml-4 text-green-700 font-bold">Liste des clients</span>
+                </a>  
+                <a href="{{ route('admin.produits') }}"
+                    class="flex items-center p-4 text-gray-700 hover:bg-green-200 hover:scale-105 transition-all rounded @if (request()->routeIs('admin.clients' , 'admin.clients.commandes')) active @endif">
+                    <span class="material-icons-sharp ">group</span>
+                    <span class="ml-4 text-green-700 font-bold">Liste des produits</span>
                 </a>
+
+                
                 <form action="{{ route('logout') }}" method="post" class="mt-6 bottom-14 absolute">
                     @csrf
                     @method('DELETE')

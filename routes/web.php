@@ -32,6 +32,14 @@ Route::controller(ProduitController::class)->group(function () {
     Route::post('/produit/save', 'store')->name('produits.store');
 
     Route::get('/produit/detail/{id}', 'show')->name('produits.show');
+
+       // Route pour modifier un produit
+       Route::get('/produits/{produit}/edit', 'edit')->name('produit.edit');
+       Route::put('/produits/{produit}/update', 'update')->name('produit.update');
+   
+
+    Route::delete('/produits/{produit}/delete', 'destroy')->name('produit.destroy');
+
 });
 
 
@@ -49,6 +57,8 @@ Route::controller(CommandeController::class)->group(function () {
     Route::get('/mes-commandes', 'mesCommandes')->name('commandes.mes');
 
 
+   
+      // Route pour supprimer un produit 
 
     
 
@@ -81,4 +91,12 @@ Route::controller(AdminController::class)->prefix('admin')->middleware('auth')->
 
      //  Route pour voir liste des commandes validees
     Route::get('/commandes/annulees', 'commandesAnnulees')->name('admin.commandes.annulees');
+
+
+
+    // Route pour voir liste des produit
+    Route::get('/produits', 'listeProduits')->name('admin.produits');
+
+
+  
 });

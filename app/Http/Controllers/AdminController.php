@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Commande;
+use App\Models\Produit;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -70,5 +71,14 @@ public function commandesAnnulees()
     $commandesAnnulees = Commande::where('etat_commande', 'annule')->with('client', 'produits')->paginate(8);
     return view('admin.commandes', ['commandes' => $commandesAnnulees, 'title' => 'Commandes Annulées']);
 }
+
+
+
+//    // Méthode pour afficher liste des produit
+public function listeProduits() {
+    $produits = Produit::all();
+    return view( 'produits.liste_produits', compact( 'produits' ) );
   
 }
+}
+
