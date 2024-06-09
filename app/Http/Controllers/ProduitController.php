@@ -65,7 +65,8 @@ class ProduitController extends Controller
     {
 
         $produit = Produit::findOrFail($id);
-        return view('produits.show', compact('produit'));
+        $autresProduits = Produit::all();
+        return view('produits.show', compact('produit','autresProduits'));
     }
 }
 
