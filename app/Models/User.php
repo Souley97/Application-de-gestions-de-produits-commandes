@@ -17,9 +17,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'nom',
+        'prenom',
+        'role',
         'email',
-        'password',
+        'password'
+        
     ];
 
     /**
@@ -44,4 +47,11 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // affichage liste des commandes des clients 
+    public function commandes() {
+        return $this->hasMany(Commande::class, 'client_id');
+    }
+
+    
 }
