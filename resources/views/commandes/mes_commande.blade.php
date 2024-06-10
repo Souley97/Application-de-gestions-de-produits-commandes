@@ -1,9 +1,10 @@
-   <script>
+   {{-- <script>
        alert('votre mot de passe est : passer')
-   </script><x-client>
+   </script> --}}
+   <x-client>
        <div class="bg-teal-400 min-h-screen p-8">
            <div class="bg-white p-8 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
-               <h2 class="text-3xl font-semibold mb-6">
+               <h2 class="text-3xl font-semibold mb-6">Mes commandes
                </h2>
 
                @if ($commandes->isEmpty())
@@ -78,5 +79,8 @@
                    </table>
                @endif
            </div>
+
+           <h2 class=" font-light mb-6">votre mot de passe est : passer
+
        </div>
    </x-client>

@@ -23,22 +23,22 @@
     </style>
 </head>
 
-<body class="bg-gray-100 min-h-screen flex flex-col">
+<body class="bg-white min-h-screen flex flex-col">
     <!-- Navbar -->
-    <nav class="bg-gray-800 p-4 shadow-md">
+    <nav class="bg-green-500 p-4 shadow-md">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="#" class="text-white text-xl font-bold">MonSite</a>
+            <a href="#" class="text-white text-xl font-bold">Kane & Frere</a>
             <div>
-                <a href="{{ route('register') }}" class="text-gray-300 hover:text-white mx-2">Inscription</a>
-                <a href="{{ route('login') }}" class="text-gray-300 hover:text-white mx-2">Connexion</a>
+                <a href="{{ route('register') }}" class="text-white hover:text-white mx-2">Inscription</a>
+                <a href="{{ route('login') }}" class="text-white hover:text-white mx-2">Connexion</a>
             </div>
         </div>
     </nav>
 
-    <div class="flex justify-center mt-10 fade-in flex-grow">
+    <div class="flex justify-center  mt-24 fade-in flex-grow">
         <div class="w-full max-w-sm">
             <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                <div class="bg-gray-800 p-4">
+                <div class="bg-green-500 p-4">
                     <h1 class="text-white text-center text-2xl font-semibold">Inscription</h1>
                 </div>
                 <div class="p-6">
@@ -55,7 +55,7 @@
 
                         <div class="mb-4">
                             <label for="nom" class="block text-gray-700 font-semibold mb-2">Nom</label>
-                            <input type="text" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" id="nom" placeholder="Nom" name="nom" value="{{ old('nom') }}" required>
+                            <input type="text" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" id="nom" placeholder="Nom" name="nom" value="{{ old('nom') }}" required>
                             @error('nom')
                             <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
                             @enderror
@@ -63,7 +63,7 @@
 
                         <div class="mb-4">
                             <label for="prenom" class="block text-gray-700 font-semibold mb-2">Prenom</label>
-                            <input type="text" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" id="prenom" placeholder="Prenom" name="prenom" value="{{ old('prenom') }}" required>
+                            <input type="text" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" id="prenom" placeholder="Prenom" name="prenom" value="{{ old('prenom') }}" required>
                             @error('prenom')
                             <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
                             @enderror
@@ -71,7 +71,7 @@
 
                         <div class="mb-4">
                             <label for="email" class="block text-gray-700 font-semibold mb-2">Email</label>
-                            <input type="email" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" id="email" placeholder="Email" name="email" value="{{ old('email') }}" required>
+                            <input type="email" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" id="email" placeholder="Email" name="email" value="{{ old('email') }}" required>
                             @error('email')
                             <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
                             @enderror
@@ -79,7 +79,7 @@
 
                         <div class="mb-4">
                             <label for="password" class="block text-gray-700 font-semibold mb-2">Password</label>
-                            <input type="password" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" id="password" placeholder="Password" name="password" required>
+                            <input type="password" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" id="password" placeholder="Password" name="password" required>
                             @error('password')
                             <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
                             @enderror
@@ -88,7 +88,7 @@
 
 
                         <div class="mb-4">
-                            <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-200">S'inscrire</button>
+                            <button type="submit" class="w-full bg-red-500 text-white py-3 rounded-lg hover:bg-red-700 transition duration-200">S'inscrire</button>
                         </div>
                     </form>
                 </div>

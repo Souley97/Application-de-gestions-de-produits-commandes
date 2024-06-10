@@ -14,8 +14,8 @@
     <nav class="bg-white shadow-md fixed w-full top-0 z-10">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
         
-            <div class="flex items-center">
-                <img src="logo.png" alt="Logo" class="h-10">
+            <div class="flex items-center">Kane & Frere
+                {{-- <img src="logo.png" alt="Logo" class="h-10"> --}}
             </div>
             @if (auth()->user())
                <div class="w-2/2 mx-4">
@@ -29,8 +29,8 @@
             <div class="flex items-center">
                 <div class="mr-4">
                     <span class="text-gray-700 font-semibold">{{auth()->user()->prenom  }} {{auth()->user()->nom}}</span>
-                </div>-
-                <img src="admin-photo.jpg" alt="Admin Photo" class="h-10 w-10 rounded-full border-2 border-gray-300">
+                </div>
+                {{-- <img src="admin-photo.jpg" alt="Admin Photo" class="h-10 w-10 rounded-full border-2 border-gray-300"> --}}
                 <form action="{{ route('logout') }}" method="post">
                     @csrf
                     @method('DELETE')
