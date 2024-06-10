@@ -102,7 +102,7 @@
             <!-- Navbar -->
             <div class="bg-white shadow-md py-4 px-6 fixed top-0 w-full flex items-center justify-between z-10">
                 <div class="flex items-center">
-                    <span class="text-3xl font-bold text-gray-800">Kane & Frere/span>
+                    <span class="text-3xl font-bold text-gray-800">Kane & Frere</span>
                 </div>
                 <div class="w-1/4    mx-auto">
                     <input type="text" class="w-full p-2 border border-gray-300 rounded" placeholder="Recherche...">

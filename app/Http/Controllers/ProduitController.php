@@ -10,21 +10,24 @@ use Illuminate\Support\Facades\Storage; // Ajoutez cette ligne
 
 class ProduitController extends Controller
 {
+    // Méthode pour afficher tous les produits
     public function index()
     {
-        $produits = Produit::all();
-        return view('welcome', compact('produits'));
-        
+        $produits = Produit::all(); // Récupérer tous les produits depuis la base de données
+        return view('welcome', compact('produits')); // Retourner la vue avec la liste des produits
     }
 
+    // Méthode pour afficher le formulaire de création de produit
     public function create()
     {
-        $categories = Categorie::all();
-        return view('produits.create', compact('categories'));
+        $categories = Categorie::all(); // Récupérer toutes les catégories
+        return view('produits.create', compact('categories')); // Retourner la vue du formulaire de création avec les catégories
     }
 
+    // Méthode pour enregistrer un nouveau produit dans la base de données
     public function store(Request $request)
     {
+        // Valider les données du formulaire
         $request->validate([
             'designation' => 'required|string|max:55|min:4',
             'prix_unitaire' => 'required|numeric|min:3',
@@ -33,12 +36,12 @@ class ProduitController extends Controller
             'categorie_id' => 'required|exists:categories,id',
         ]);
 
-        $admin= auth()->id();
+        $admin = auth()->id(); // Récupérer l'ID de l'utilisateur authentifié
         $image = null;
 
         // Vérifier si un fichier image est uploadé
         if ($request->hasFile('image')) {
-            // Stocker l'image dans le répertoire 'public/blog'
+            // Stocker l'image dans le répertoire 'public/produit'
             $chemin_image = $request->file('image')->store('public/produit');
 
             // Vérifier si le chemin de l'image est bien généré
@@ -56,98 +59,89 @@ class ProduitController extends Controller
         $data['user_id'] = $admin;
         $data['reference'] = 'ref-' . uniqid();
 
+        Produit::create($data); // Enregistrer le produit dans la base de données
 
-
-        Produit::create($data);
-
-        return redirect()->route('admin.produits')->with('success', 'Produit ajouté avec succès');
+        return redirect()->route('admin.produits')->with('success', 'Produit ajouté avec succès'); // Rediriger vers la liste des produits avec un message de succès
     }
 
+    // Méthode pour afficher les détails d'un produit
     public function show($id)
     {
-
-        $produit = Produit::findOrFail($id);
-        $autresProduits = Produit::all();
-        return view('produits.show', compact('produit','autresProduits'));
+        $produit = Produit::findOrFail($id); // Récupérer le produit avec l'ID spécifié
+        $autresProduits = Produit::all(); // Récupérer tous les autres produits
+        return view('produits.show', compact('produit', 'autresProduits')); // Retourner la vue des détails du produit avec la liste des autres produits
     }
 
+    // Méthode pour afficher le formulaire de modification d'un produit
+    public function edit($id)
+    {
+        $categories = Categorie::all(); // Récupérer toutes les catégories
+        $produit = Produit::findOrFail($id); // Récupérer le produit avec l'ID spécifié
+        return view('produits.edit', compact('produit', 'categories')); // Retourner la vue du formulaire de modification avec les données du produit et les catégories
+    }
 
-   // ProduitController.php
+    // Méthode pour mettre à jour les informations d'un produit dans la base de données
+    public function update(Request $request, $id)
+    {
+        // Valider les données du formulaire de modification
+        $request->validate([
+            'designation' => 'required|string|max:55|min:4',
+            'prix_unitaire' => 'required|numeric|min:3',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'etat' => 'required|in:disponible,en_rupture,en_stock',
+            'categorie_id' => 'required|exists:categories,id',
+        ]);
 
-public function edit($id)
-{
-    $categories = Categorie::all(); // Si vous avez des catégories à afficher dans le formulaire
+        $produit = Produit::findOrFail($id); // Récupérer le produit avec l'ID spécifié
+        $data = $request->all(); // Récupérer toutes les données du formulaire
 
-    $produit = Produit::findOrFail($id);
+        // Vérifier si un fichier image est uploadé
+        if ($request->hasFile(' image')) {
+            // Supprimer l'ancienne image associée au produit
+            if ($produit->image) {
+                Storage::delete('public/produit/' . $produit->image);
+            }
 
-    return view('produits.edit', compact('produit', 'categories'));
-}
+            // Stocker la nouvelle image dans le répertoire 'public/produit'
+            $chemin_image = $request->file('image')->store('public/produit');
 
-public function update(Request $request, $id)
-{
-    $request->validate([
-        'designation' => 'required|string|max:55|min:4',
-        'prix_unitaire' => 'required|numeric|min:3',
-        'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        'etat' => 'required|in:disponible,en_rupture,en_stock',
-        'categorie_id' => 'required|exists:categories,id',
-    ]);
+            // Vérifier si le chemin de l'image est bien généré
+            if (!$chemin_image) {
+                return redirect()->back()->with('error', 'Erreur lors du téléchargement de l\'image.');
+            }
 
-    $produit = Produit::findOrFail($id);
-    $data = $request->all();
+            // Récupérer le nom du fichier de l'image
+            $data['image'] = basename($chemin_image);
+        }
 
-    // Vérifier si un fichier image est uploadé
-    if ($request->hasFile('image')) {
-        // Supprimer l'ancienne image
+        $produit->update($data); // Mettre à jour les informations du produit dans la base de données
+
+        return redirect()->route('admin.produits')->with('success', 'Produit mis à jour avec succès'); // Rediriger vers la liste des produits avec un message de succès
+    }
+
+    // Méthode pour afficher la liste des produits dans le panneau d'administration
+    public function listeProduits() {
+        $produits = Produit::all(); // Récupérer tous les produits
+        return view('admin.produits', compact('produits')); // Retourner la vue avec la liste des produits
+    }
+
+    // Méthode pour supprimer un produit de la base de données
+    public function destroy($id)
+    {
+        $produit = Produit::findOrFail($id); // Récupérer le produit avec l'ID spécifié
+
+        // Supprimer l'image associée au produit
         if ($produit->image) {
             Storage::delete('public/produit/' . $produit->image);
         }
 
-        // Stocker la nouvelle image
-        $chemin_image = $request->file('image')->store('public/produit');
+        $produit->delete(); // Supprimer le produit de la base de données
 
-        // Vérifier si le chemin de l'image est bien généré
-        if (!$chemin_image) {
-            return redirect()->back()->with('error', 'Erreur lors du téléchargement de l\'image.');
-        }
-
-        // Récupérer le nom du fichier de l'image
-        $data['image'] = basename($chemin_image);
+        return redirect()->route('admin.produits')->with('success', 'Produit supprimé avec succès'); // Rediriger vers la liste des produits avec un message de succès
     }
 
-    $produit->update($data);
-
-    return redirect()->route('admin.produits')->with('success', 'Produit mis à jour avec succès');
-}
-
-
-    // methode pour la liste des products
-    public function listeProduits() {
-        $produits = Produit::all();
-        return view( 'admin.produits', compact( 'produits' ) );
-    }
-
-
-    public function destroy($id)
-{
-    $produit = Produit::findOrFail($id);
-
-    // Supprimer l'image associée au produit
-    
-   // Supprimer l'image associée au produit
-   if ($produit->image) {
-    Storage::delete('public/produit/' . $produit->image);
-}
-
-    // Supprimer le produit
-    $produit->delete();
-
-    return redirect()->route('admin.produits')->with('success', 'Produit supprimé avec succès');
-}
-
-    // Méthode pour afficher les commandes validee
+    // Méthode pour afficher les commandes validées
+    // Méthode à implémenter en fonction de la logique de votre application
 
 }
-
-
 
