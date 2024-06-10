@@ -14,7 +14,7 @@
     <nav class="bg-white shadow-md fixed w-full top-0 z-10">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
         
-            <div class="flex items-center">
+            <div class="flex items-center">Kane & Frere
                 <img src="logo.png" alt="Logo" class="h-10">
             </div>
             @if (auth()->user())
