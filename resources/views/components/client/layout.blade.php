@@ -16,6 +16,8 @@
         
             <div class="flex items-center">Kane & Frere
                 {{-- <img src="logo.png" alt="Logo" class="h-10"> --}}
+
+              
             </div>
             @if (auth()->user())
                <div class="w-2/2 mx-4">
