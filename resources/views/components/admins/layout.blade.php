@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -58,7 +59,7 @@
                 </a>
                 <a href="{{ route('admin.commandes.validees') }}"
                     class="flex items-center p-4 text-gray-700 hover:bg-green-200 hover:scale-105 transition-all rounded @if (request()->routeIs('admin.commandes.validees')) active @endif">
-                    <span class="material-icons-sharp">shopping_cart</span>
+                    <i class="fas fa-shopping-cart"></i>
                     <span class="ml-4 text-green-700 font-bold">Commandes</span>
                 </a>
                 <a href="{{ route('admin.commandes.encours') }}"
@@ -70,7 +71,19 @@
                     class="flex items-center p-4 text-gray-700 hover:bg-green-200 hover:scale-105 transition-all rounded @if (request()->routeIs('admin.clients' , 'admin.clients.commandes')) active @endif">
                     <span class="material-icons-sharp ">group</span>
                     <span class="ml-4 text-green-700 font-bold">Liste des clients</span>
+                </a>  
+                <a href="{{ route('admin.produits') }}"
+                    class="flex items-center p-4 text-gray-700 hover:bg-green-200 hover:scale-105 transition-all rounded @if (request()->routeIs('admin.produits')) active @endif">
+                    <i class="fas fa-boxes"></i>
+                    <span class="ml-4 text-green-700 font-bold">Liste des produits</span>
+                </a> 
+                <a href="{{ route('admin.categories') }}"
+                    class="flex items-center p-4 text-gray-700 hover:bg-green-200 hover:scale-105 transition-all rounded @if (request()->routeIs('admin.categories')) active @endif">
+                    <i class="fas fa-list"></i>
+                    <span class="ml-4 text-green-700 font-bold">Liste des catégories</span>
                 </a>
+
+                
                 <form action="{{ route('logout') }}" method="post" class="mt-6 bottom-14 absolute">
                     @csrf
                     @method('DELETE')
@@ -89,7 +102,7 @@
             <!-- Navbar -->
             <div class="bg-white shadow-md py-4 px-6 fixed top-0 w-full flex items-center justify-between z-10">
                 <div class="flex items-center">
-                    <span class="text-3xl font-bold text-gray-800">App Logo</span>
+                    <span class="text-3xl font-bold text-gray-800">Kane & Frere/span>
                 </div>
                 <div class="w-1/4    mx-auto">
                     <input type="text" class="w-full p-2 border border-gray-300 rounded" placeholder="Recherche...">

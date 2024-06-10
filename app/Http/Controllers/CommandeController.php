@@ -23,30 +23,37 @@ class CommandeController extends Controller {
         return view( 'commandes.create', compact( 'produits' ) );
     }
 
+
+
     public function ajouterAuPanier( Request $request, $produitId ) {
         $produit = Produit::findOrFail( $produitId );
         $user = auth()->user();
 
         // Si l'utilisateur est authentifié
-             if ($user) {
-                 // Récupérer ou créer la commande en cours de l'utilisateur
-        $commande = $user->commandes()->updateOrCreate(
-            [ 'etat_commande' => 'encours' ],
-            [ 'reference' => 'cmd-' . uniqid() ,
-            'montant_total' => $produit->prix_unitaire // Fournir une valeur pour montant_total
-
-            ]
-
-        );
-
-        // Mettre à jour le montant total de la commande
-        $commande->update( [ 'montant_total' => $commande->montant_total + $produit->prix_unitaire ] );
-
-        // Ajouter le produit à la commande
-        $commande->produits()->attach( $produit->id );
-
-        return redirect()->route( 'commandes.mes' )->with( 'success', 'Produit ajouté à la commande avec succès.' );
-    } else {
+        if ($user) {
+            // Récupérer ou créer la commande en cours de l'utilisateur
+            $commande = $user->commandes()->where('etat_commande', 'aupanier')->first();
+    
+            if (!$commande) {
+                $commande = new Commande();
+                $commande->reference = 'cmd-' . uniqid();
+                $commande->montant_total = 0; // Initialiser montant_total à 0
+                $commande->etat_commande = 'aupanier';
+                $commande->client_id = $user->id;
+                $commande->save();
+            }
+    
+            // Ajouter le produit à la commande seulement si ce n'est pas déjà ajouté
+            // if (!$commande->produits()->where('produit_id', $produitId)->exists()) {
+                $commande->produits()->attach($produit->id);
+                
+                // Mettre à jour le montant total de la commande
+                $commande->montant_total += $produit->prix_unitaire;
+                $commande->save();
+            // }
+    
+            return redirect()->route('commandes.mes')->with('success', 'Produit ajouté à la commande avec succès.');
+        } else {
         // Valider les entrées de l'utilisateur
                  $request->validate([
                      'nom' => 'required|string|max:55|min:4',
@@ -69,7 +76,7 @@ class CommandeController extends Controller {
         $commande = Commande::create( [
             'reference' => 'cmd-' . uniqid(),
             'montant_total' => $produit->prix_unitaire,
-            'etat_commande' => 'encours',
+            'etat_commande' => 'aupanier',
             'client_id' => $nouvelUtilisateur->id,
         ] );
 
@@ -84,8 +91,17 @@ class CommandeController extends Controller {
          }
 
 
-         public function mesCommandes()
-{
+   public function confirmerCommande( Commande $commande ) {
+            // Annuler la commande
+            $commande->etat_commande = 'encours';
+            $commande->save();
+    
+            // Rediriger vers le tableau de bord avec un message de succès
+            return redirect()->back( )->with( 'success', 'Commande annulée avec succès.' );
+        }
+
+    public function mesCommandes()
+        {
     $user = auth()->user();
     $commandes = $user->commandes()->orderBy('created_at', 'desc')->paginate(10); // Paginer les commandes
 

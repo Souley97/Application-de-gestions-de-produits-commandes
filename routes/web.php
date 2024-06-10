@@ -5,6 +5,7 @@ use App\Http\Controllers\PanierController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ProduitController;
 
 Route::get('/', function () {
@@ -32,6 +33,14 @@ Route::controller(ProduitController::class)->group(function () {
     Route::post('/produit/save', 'store')->name('produits.store');
 
     Route::get('/produit/detail/{id}', 'show')->name('produits.show');
+
+       // Route pour modifier un produit
+       Route::get('/produits/{produit}/edit', 'edit')->name('produit.edit');
+       Route::put('/produits/{produit}/update', 'update')->name('produit.update');
+   
+
+    Route::delete('/produits/{produit}/delete', 'destroy')->name('produit.destroy');
+
 });
 
 
@@ -44,10 +53,13 @@ Route::controller(CommandeController::class)->group(function () {
     Route::post('/panier/ajouter/{produitId}', 'ajouterAuPanier')->name('panier.ajouter');
 
 
+    Route::post('/commandes/{commande}/confirmer', 'confirmerCommande')->name('client.commandes.confirmer');
 
     Route::get('/mes-commandes', 'mesCommandes')->name('commandes.mes');
 
 
+   
+      // Route pour supprimer un produit 
 
     
 
@@ -80,4 +92,27 @@ Route::controller(AdminController::class)->prefix('admin')->middleware('auth')->
 
      //  Route pour voir liste des commandes validees
     Route::get('/commandes/annulees', 'commandesAnnulees')->name('admin.commandes.annulees');
+
+
+
+    // Route pour voir liste des produit
+    Route::get('/produits', 'listeProduits')->name('admin.produits');
+
+
+  
+});
+
+Route::controller(CategorieController::class)->prefix('admin')->group(function (){
+    Route::get('categories', 'index')->name('admin.categories');
+
+    Route::post('categories/store', 'store')->name('categories.store');
+
+    
+    Route::delete('categories{categorie}', 'destroy')->name('categories.destroy');
+
+    Route::get('categories/{id}/edit',  'edit')->name('categories.edit');
+    Route::put('categories/{categorie}', 'update')->name('categories.update');
+
+
+
 });
