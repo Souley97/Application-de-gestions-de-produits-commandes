@@ -48,22 +48,22 @@ class AdminController extends Controller {
     }
 
     // Méthode pour afficher les commandes en cours
-    public function commandesEnCours() {
-        $commandesEnCours = Commande::where('etat_commande', 'encours')->with('client', 'produits')->get();
-        return view('admin.commandes_encours', compact('commandesEnCours'));
-    }
+        public function commandesEnCours() {
+            $commandesEnCours = Commande::where('etat_commande', 'encours')->with('client', 'produits')->get();
+            return view('admin.commandes_encours', compact('commandesEnCours'));
+        }
 
-    // Méthode pour afficher les commandes validées
-    public function commandesValidees() {
-        $commandesValidees = Commande::where('etat_commande', 'valide')->with('client', 'produits')->paginate(8);
-        return view('admin.commandes', ['commandes' => $commandesValidees, 'title' => 'Commandes Validées']);
-    }
+        // Méthode pour afficher les commandes validées
+        public function commandesValidees() {
+            $commandesValidees = Commande::where('etat_commande', 'valide')->with('client', 'produits')->paginate(8);
+            return view('admin.commandes', ['commandes' => $commandesValidees, 'title' => 'Commandes Validées']);
+        }
 
-    // Méthode pour afficher les commandes annulées
-    public function commandesAnnulees() {
-        $commandesAnnulees = Commande::where('etat_commande', 'annule')->with('client', 'produits')->paginate(8);
-        return view('admin.commandes', ['commandes' => $commandesAnnulees, 'title' => 'Commandes Annulées']);
-    }
+        // Méthode pour afficher les commandes annulées
+        public function commandesAnnulees() {
+            $commandesAnnulees = Commande::where('etat_commande', 'annule')->with('client', 'produits')->paginate(8);
+            return view('admin.commandes', ['commandes' => $commandesAnnulees, 'title' => 'Commandes Annulées']);
+        }
 
     // Méthode pour afficher la liste des produits
     public function listeProduits() {
