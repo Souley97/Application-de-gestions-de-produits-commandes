@@ -32,7 +32,7 @@
                                    <td class="border-t px-4 py-2">
                                        <ul>
                                            @foreach ($commande->produits as $produit)
-                                               <li>{{ $produit->designation }}</li>
+                                               <li>{{ $produit->designation }} {{$produit->prix_unitaire }}</li>
                                            @endforeach
                                        </ul>
                                    </td>

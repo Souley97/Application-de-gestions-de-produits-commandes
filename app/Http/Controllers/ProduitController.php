@@ -14,7 +14,8 @@ class ProduitController extends Controller
     public function index()
     {
         $produits = Produit::all(); // Récupérer tous les produits depuis la base de données
-        return view('welcome', compact('produits')); // Retourner la vue avec la liste des produits
+        $categories = Categorie::all(); // Récupérer tous les produits depuis la base de données
+        return view('welcome', compact('produits','categories')); // Retourner la vue avec la liste des produits
     }
 
     // Méthode pour afficher le formulaire de création de produit
@@ -98,9 +99,9 @@ class ProduitController extends Controller
         // Vérifier si un fichier image est uploadé
         if ($request->hasFile(' image')) {
             // Supprimer l'ancienne image associée au produit
-            if ($produit->image) {
-                Storage::delete('public/produit/' . $produit->image);
-            }
+            // if ($produit->image) {
+            //     Storage::delete('public/produit/' . $produit->image);
+            // }
 
             // Stocker la nouvelle image dans le répertoire 'public/produit'
             $chemin_image = $request->file('image')->store('public/produit');
@@ -140,6 +141,17 @@ class ProduitController extends Controller
         return redirect()->route('admin.produits')->with('success', 'Produit supprimé avec succès'); // Rediriger vers la liste des produits avec un message de succès
     }
 
+
+
+    public function produitsParCategorie($categorieId)
+    {        $categories = Categorie::all(); // Récupérer tous les produits depuis la base de données
+
+        // Récupérer la catégorie avec ses produits
+        $categorie = Categorie::with('produits')->findOrFail($categorieId);
+
+        // Passer la catégorie et ses produits à la vue
+        return view('produits.filter', ['produits' => $categorie, 'categories' => $categories, 'title' => 'Commandes Validées']);
+    }
     // Méthode pour afficher les commandes validées
     // Méthode à implémenter en fonction de la logique de votre application
 

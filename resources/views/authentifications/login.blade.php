@@ -31,6 +31,7 @@
             </div>
         </div>
     </nav>
+    
 
     <div class="flex justify-center mt-20 fade-in flex-grow">
         <div class="w-full max-w-sm">

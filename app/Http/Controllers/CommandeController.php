@@ -22,15 +22,16 @@ class CommandeController extends Controller {
     }
 
     // Méthode pour ajouter un produit au panier ou créer une nouvelle commande
-    public function ajouterAuPanier( Request $request, $produitId ) {
-        $produit = Produit::findOrFail( $produitId );
+    public function ajouterAuPanier(Request $request, $produitId)
+    {
+        $produit = Produit::findOrFail($produitId);
         $user = auth()->user();
-
+    
         // Si l'utilisateur est authentifié
         if ($user) {
             // Récupérer ou créer la commande en cours de l'utilisateur
             $commande = $user->commandes()->where('etat_commande', 'aupanier')->first();
-
+    
             if (!$commande) {
                 $commande = new Commande();
                 $commande->reference = 'cmd-' . uniqid();
@@ -39,17 +40,21 @@ class CommandeController extends Controller {
                 $commande->client_id = $user->id;
                 $commande->save();
             }
-
+    
             // Ajouter le produit à la commande seulement si ce n'est pas déjà ajouté
             // if (!$commande->produits()->where('produit_id', $produitId)->exists()) {
-                $commande->produits()->attach($produit->id);
-                
-                // Mettre à jour le montant total de la commande
-                $commande->montant_total += $produit->prix_unitaire;
-                $commande->save();
+            $commande->produits()->attach($produit->id);
+    
+            // Mettre à jour le montant total de la commande
+            $commande->montant_total += $produit->prix_unitaire;
+            $commande->save();
             // }
     
-            return redirect()->route('commandes.mes')->with('success', 'Produit ajouté à la commande avec succès.');
+            // Définir une session pour indiquer qu'une commande est en cours et le nombre de produits dans le panier
+            session(['commande_en_cours' => true]);
+            session(['nombre_produits_panier' => $commande->produits->count()]);
+    
+            return redirect()->back()->with('success', 'Produit ajouté à la commande avec succès.');
         } else {
             // Valider les entrées de l'utilisateur
             $request->validate([
@@ -57,35 +62,41 @@ class CommandeController extends Controller {
                 'prenom' => 'required|string|max:55|min:2',
                 'email' => 'required|email|max:255',
             ]);
-            
+    
             // Créer un nouvel utilisateur ou récupérer s'il existe déjà
             $nouvelUtilisateur = User::firstOrCreate(
-                [ 'email' => $request->email ],
+                ['email' => $request->email],
                 [
                     'nom' => $request->nom,
                     'prenom' => $request->prenom,
                     'role' => 'client',
-                    'password' => Hash::make( 'passer' ),
+                    'password' => Hash::make('passer'),
                 ]
             );
-
+    
             // Créer une commande pour le nouvel utilisateur
-            $commande = Commande::create( [
+            $commande = Commande::create([
                 'reference' => 'cmd-' . uniqid(),
                 'montant_total' => $produit->prix_unitaire,
                 'etat_commande' => 'aupanier',
                 'client_id' => $nouvelUtilisateur->id,
-            ] );
-
+            ]);
+    
             // Ajouter le produit à la commande
-            $commande->produits()->attach( $produit->id );
-
+            $commande->produits()->attach($produit->id);
+    
             // Connecter automatiquement l'utilisateur
             Auth::login($nouvelUtilisateur);
-            
-            return redirect()->route('commandes.mes')->with('success', 'Produit ajouté à la commande avec succès.');
+    
+            // Définir une session pour indiquer qu'une commande est en cours et le nombre de produits dans le panier
+            session(['commande_en_cours' => true]);
+            session(['nombre_produits_panier' => $commande->produits->count()]);
+    
+            // return redirect()->route('commandes.mes')->with('success', 'Produit ajouté à la commande avec succès.');
+            return redirect()->back()->with('success', 'Produit ajouté à la commande avec succès.');
         }
     }
+    
 
     // Méthode pour confirmer une commande
     public function confirmerCommande( Commande $commande ) {
@@ -101,6 +112,14 @@ class CommandeController extends Controller {
     public function mesCommandes() {
         $user = auth()->user();
         $commandes = $user->commandes()->orderBy('created_at', 'desc')->paginate(10);
+
+        return view('commandes.mes_commande', compact('commandes'));
+    }
+
+
+    public function panier() {
+        $user = auth()->user();
+        $commandes = $user->commandes()->where('etat_commande', 'aupanier')->orderBy('created_at', 'desc')->paginate(10);
 
         return view('commandes.mes_commande', compact('commandes'));
     }

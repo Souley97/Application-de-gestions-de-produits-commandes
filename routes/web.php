@@ -50,6 +50,10 @@ Route::controller(ProduitController::class)->group(function () {
 
     // Supprime un produit
     Route::delete('/produits/{produit}/delete', 'destroy')->name('produit.destroy');
+
+
+    Route::get('/categories/{categorieId}/produits',  'produitsParCategorie')->name('categories.produits');
+
 });
 
 // Routes pour la gestion des commandes
@@ -69,6 +73,9 @@ Route::controller(CommandeController::class)->group(function () {
 
     // Affiche les commandes de l'utilisateur
     Route::get('/mes-commandes', 'mesCommandes')->name('commandes.mes');
+
+        // Affiche les commandes de l'utilisateur
+    Route::get('/panier', 'panier')->name('commandes.panier');
 });
 
 // Routes pour l'administration
