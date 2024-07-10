@@ -80,7 +80,6 @@
                @endif
            </div>
 
-           <h2 class=" font-light mb-6">votre mot de passe est : passer
 
        </div>
    </x-client>

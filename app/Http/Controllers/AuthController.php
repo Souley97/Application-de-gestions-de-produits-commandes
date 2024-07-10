@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         $user = new User();
         $user->nom = $request->nom;
-        $user->prenom = $request->prenom;
+        $user->prenom = $request->prenom;   
         $user->email = $request->email;
         $user->role = "admin"; // Utilisateur créé en tant qu'administrateur
         $user->password = Hash::make($request->password);
@@ -59,4 +59,4 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 }
-    
+        

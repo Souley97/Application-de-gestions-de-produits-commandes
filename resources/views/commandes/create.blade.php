@@ -11,7 +11,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="prenom" class="block text-gray-700 font-bold mb-2">Prénom:</label>
-                    <input type="text" name="prenom" id="prenom" class="form-input py-4 bg-gray-200  rounded-md border-gray-300 w-full"  placeholder="Souleymane" required>
+                    <input typhnhnhnnhnhe="text" name="prenom" id="prenom" class="form-input py-4 bg-gray-200  rounded-md border-gray-300 w-full"  placeholder="Souleymane" required>
                 </div>
                 <div class="mb-4">
                     <label for="email" class="block text-gray-700 font-bold mb-2">Email:</label>
