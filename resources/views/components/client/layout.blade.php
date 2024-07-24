@@ -68,7 +68,7 @@
     <!-- Navbar -->
     <nav class="bg-white shadow-md fixed w-full top-0 z-10">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="/" class="flex items-center">
+            <a href="{{ route('produit.index') }}" class="flex items-center">
                 <!-- Logo -->
                 <span class="text-2xl font-bold">Kane & Frere</span>
             </a>
@@ -105,7 +105,6 @@
             @else
             <div class="flex items-center space-x-4">
                 <a href="{{ route('login') }}" class="text-green-500 hover:text-white px-4 py-2 rounded hover:bg-green-700 mx-2">Connection</a>
-                <a href="{{ url('/') }}" class="text-green-500 hover:text-white px-4 py-2 rounded hover:bg-green-700 mx-2">Produit</a>
             </div>
             @endif
         </div>

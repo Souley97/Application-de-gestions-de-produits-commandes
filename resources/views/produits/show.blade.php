@@ -8,17 +8,29 @@
                     </div>
                     <div class="flex -mx-2 mb-4">
                         <div class="w-1/2 px-2">
-                            <form action="{{ route('panier.ajouter', $produit->id) }}" method="POST">
+                          
+
+                        @if (auth()->user())
+                            <form action="{{ route('panier.ajouter', $produit->id) }}" method="POST" class="mt-4">
                                 @csrf
-                               
-                            <button type="submit" class="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">Ajouter au panier
-                            </button>
-                        </form>
+                                <button type="submit"
+                                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded">
+                                    Ajouter au panier
+                                </button>
+                            </form>
+                        @else
+                            <a href="{{ route('produits.commandes.create', $produit->id) }}"
+                                class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Passer
+                                une commande</a>
+                        @endif
 
                         </div>
+                        @auth
+                            
                         <a href="{{ route('commandes.mes') }}" class="w-1/2 px-2">
                             <button class="w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">Mes commandes</button>
                         </a>
+                        @endauth
                     </div>
                 </div>
                 <div class="md:flex-1 px-4">
